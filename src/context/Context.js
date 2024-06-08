@@ -23,13 +23,23 @@ const ContextProvider = ({ children }) => {
         if (myVideo.current) {
           myVideo.current.srcObject = currentStream;
         }
+      })
+      .catch((error) => {
+        console.error("Kamerani olishda xatolik yuz berdi:", error);
       });
 
     socket.on("me", (id) => setMe(id));
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []);
+
+    return () => {
+      // Birinchi argument bo'lmagan to'xtash funktsiyasi
+      // useEffect tugaganidan so'ng ishga tushadi
+      // Bu yerda kamerani o'chirish yoki boshqa ishlar bajarishingiz mumkin
+      // Bu yerda kamerani to'xtatish, resurslarni tozalash va ko'ngilliklarini to'xtatishni amalga oshirish uchun foydalanish mumkin
+    };
+  }, [myVideo.current]);
 
   const answerCall = () => {
     setCallAccepted(true);
