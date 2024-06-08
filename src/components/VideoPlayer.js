@@ -31,7 +31,7 @@ const VideoPlayer = () => {
             playsInline
             ref={userVideo}
             autoPlay
-            width="600"
+            width="60"
           />
         </div>
       )}
